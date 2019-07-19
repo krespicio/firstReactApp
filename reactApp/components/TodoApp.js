@@ -6,12 +6,12 @@ import axios from "axios";
 
 const dbUrl = "http://localhost:3000/db";
 
-let dummyList = [
-  { taskText: "buy cat food", complete: false },
-  { taskText: "go run around", complete: true },
-  { taskText: "start schoool", complete: false },
-  { taskText: "beg for moneys", complete: false }
-];
+// let dummyList = [
+//   { taskText: "buy cat food", complete: false },
+//   { taskText: "go run around", complete: true },
+//   { taskText: "start schoool", complete: false },
+//   { taskText: "beg for moneys", complete: false }
+// ];
 
 class TodoApp extends React.Component {
   constructor(props) {
@@ -33,33 +33,41 @@ class TodoApp extends React.Component {
         // Do whatever you want in the event of an error in here
         console.log(error);
       });
+  }
 
-    // dummyList.push({ taskText: task, complete: false });
-    // console.log(dummyList, task);
+  removeTodo(id) {
+    console.log(id);
+    axios.post(dbUrl + "/delete", { id: id }).then(response => {
+      this.setState({ todos: response.data });
+    });
+
+    // dummyList.splice(index, 1);
+    // console.log("the index is " + index);
     // this.setState({
     //   todos: dummyList
     // });
   }
 
-  removeTodo(index) {
-    dummyList.splice(index, 1);
-    console.log("the index is " + index);
-    this.setState({
-      todos: dummyList
+  toggleTodo(id) {
+    axios.post(dbUrl + "/toggle", { id: id }).then(response => {
+      this.setState({ todos: response.data });
     });
-  }
 
-  toggleTodo(index) {
-    dummyList[index].complete = !dummyList[index].complete;
-    this.setState({
-      todos: dummyList
-    });
+    // let arr = this.state.todos;
+    // arr[index].complete = !arr[index].complete;
+    // this.setState({
+    //   todos: arr
+    // });
   }
 
   componentDidMount() {
-    this.setState({
-      todos: dummyList
+    axios.get(dbUrl + "/all").then(response => {
+      this.setState({ todos: response.data });
     });
+
+    // this.setState({
+    //   todos: dummyList
+    // });
   }
 
   render() {
@@ -68,8 +76,8 @@ class TodoApp extends React.Component {
         <InputLine submit={task => this.addTodo(task)} />
         <TodoList
           list={this.state.todos}
-          todoXClick={index => this.removeTodo(index)}
-          todoToggleClick={index => this.toggleTodo(index)}
+          todoXClick={id => this.removeTodo(id)}
+          todoToggleClick={id => this.toggleTodo(id)}
         />
       </div>
     );
