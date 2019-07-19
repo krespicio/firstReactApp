@@ -9,8 +9,15 @@ class TodoList extends React.Component {
   render() {
     return (
       <ul>
-        {this.props.list.map(task => {
-          return <Todo todo={task.taskText} completed={task.complete} />;
+        {this.props.list.map((task, i) => {
+          return (
+            <Todo
+              todo={task.taskText}
+              completed={task.complete}
+              xClick={() => this.props.todoXClick(i)}
+              toggleClick={() => this.props.todoToggleClick(i)}
+            />
+          );
         })}
       </ul>
     );

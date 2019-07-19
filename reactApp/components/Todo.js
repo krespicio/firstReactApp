@@ -8,12 +8,22 @@ class Todo extends React.Component {
   render() {
     return (
       <li>
-        <button type="button">X</button>
+        <button
+          type="button"
+          onClick={() => {
+            this.props.xClick();
+          }}
+        >
+          X
+        </button>
         {this.props.completed ? (
           <strike>{this.props.todo}</strike>
         ) : (
           this.props.todo
         )}
+        <button type="button" onClick={() => this.props.toggleClick()}>
+          Finished
+        </button>
       </li>
     );
   }

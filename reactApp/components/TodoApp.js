@@ -19,7 +19,22 @@ class TodoApp extends React.Component {
 
   addTodo(task) {
     dummyList.push({ taskText: task, complete: false });
-    console.log(dummyList);
+    console.log(dummyList, task);
+    this.setState({
+      todos: dummyList
+    });
+  }
+
+  removeTodo(index) {
+    dummyList.splice(index, 1);
+    console.log("the index is " + index);
+    this.setState({
+      todos: dummyList
+    });
+  }
+
+  toggleTodo(index) {
+    dummyList[index].complete = !dummyList[index].complete;
     this.setState({
       todos: dummyList
     });
@@ -34,8 +49,12 @@ class TodoApp extends React.Component {
   render() {
     return (
       <div>
-        <InputLine submit={() => this.addTodo("Snacker Packer")} />
-        <TodoList list={dummyList} />
+        <InputLine submit={task => this.addTodo(task)} />
+        <TodoList
+          list={dummyList}
+          todoXClick={index => this.removeTodo(index)}
+          todoToggleClick={index => this.toggleTodo(index)}
+        />
       </div>
     );
   }
