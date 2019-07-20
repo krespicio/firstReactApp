@@ -40,6 +40,11 @@ class InputLine extends React.Component {
             this.handleSubmit(e);
           }}
         >
+          <i
+            className="fa fa-plus-square"
+            aria-hidden="true"
+            style={{ marginRight: "5px" }}
+          ></i>
           Add ToDo
         </button>
       </form>

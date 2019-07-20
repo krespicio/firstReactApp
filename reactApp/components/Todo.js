@@ -13,8 +13,9 @@ class Todo extends React.Component {
           onClick={() => {
             this.props.xClick();
           }}
+          style={{ marginRight: "10px" }}
         >
-          X
+          <i className="fa fa-trash-o" aria-hidden="true"></i>
         </button>
         {this.props.completed ? (
           <strike>{this.props.todo}</strike>
